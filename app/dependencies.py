@@ -1,5 +1,5 @@
 from fastapi import Depends, HTTPException, status
-from fastapi.security import OAuth2PasswordBearer
+from fastapi.security import OAuth2PasswordBearer, HTTPBearer, HTTPAuthorizationCredentials
 from jose import JWTError, jwt
 from datetime import datetime, timedelta
 from .models import TokenData
@@ -8,16 +8,28 @@ from .database import get_db_connection
 
 SECRET_KEY = "ba32c1bf6f5c1e9211992a687556b7038d0fa07fbf2b55180d2e09ddf25797c0b265f58081e206927c7c7a813ab522eafe3068e647059bf0774db9764523c5c988417d25cf6f6fae5a5cb7bc95b28dd212d03bafa7ca5a8741a66047cc471a883f4b36d1d63c3889945549e9ea66b673fe98c733b30b7ca3cbd4ac82f013470f"
 ALGORITHM = "HS256"
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
+oauth2_scheme = OAuth2PasswordBearer(
+    tokenUrl="/users/token", 
+    scheme_name="password",
+    auto_error=True
+)
 
-async def get_current_user(token: str = Depends(oauth2_scheme)):
+bearer_scheme = HTTPBearer(auto_error=False)
+
+async def get_current_user(
+    token: str = Depends(oauth2_scheme),
+    http_credentials: HTTPAuthorizationCredentials = Depends(bearer_scheme)
+):
+    actual_token = token if token else http_credentials.credentials
+    
     credentials_exception = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
         detail="Could not validate credentials",
         headers={"WWW-Authenticate": "Bearer"},
     )
+    
     try:
-        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+        payload = jwt.decode(actual_token, SECRET_KEY, algorithms=[ALGORITHM])
         username: str = payload.get("sub")
         if username is None:
             raise credentials_exception
