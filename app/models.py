@@ -1,6 +1,6 @@
 from pydantic import BaseModel, EmailStr
 from typing import Optional
-from datetime import datetime
+from datetime import datetime, date
 
 class BookBase(BaseModel):
     title: str
@@ -81,6 +81,6 @@ class BookUpdate(BaseModel):
 class LoanUpdate(BaseModel):
     user_id: int | None = None
     book_id: int | None = None
-    loan_date: str | None = None
-    return_date: str | None = None
-    due_date: str | None = None
+    loan_date: date | None = None
+    return_date: date | None = None
+    due_date: date | None = None

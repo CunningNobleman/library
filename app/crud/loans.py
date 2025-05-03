@@ -48,29 +48,32 @@ def create_loan(loan_data: dict):
     return new_loan
 
 #updating loan
-def return_loan(loan_id: int):
-    conn = get_db_connection()
-    cursor = conn.cursor()
-    
-    cursor.execute(
-        'UPDATE book_loans SET return_date = ? WHERE loan_id = ?',
-        (datetime.now(), loan_id)
-    )
-    conn.commit()
-    
-    cursor.execute('SELECT * FROM book_loans WHERE loan_id = ?', (loan_id,))
-    updated_loan = dict(cursor.fetchone())
-    conn.close()
-    return updated_loan
-
-
-# Update book loan
-def update_loan(loan_id: int, loan_data: dict):
+def update_loan(loan_id: int, loan_update: dict):
     conn = get_db_connection()
     cursor = conn.cursor()
     try:
-        set_clause = ", ".join(f"{key} = ?" for key in loan_data.keys())
-        values = list(loan_data.values())
+        update_data = {}
+        
+        if loan_update.get('book_id'):
+            update_data['book_id'] = loan_update['book_id']
+        
+        if loan_update.get('user_id'):
+            update_data['user_id'] = loan_update['user_id']
+        
+        if loan_update.get('loan_date'):
+            update_data['loan_date'] = loan_update['loan_date']
+        
+        if loan_update.get('due_date'):
+            update_data['due_date'] = loan_update['due_date']
+        
+        if loan_update.get('return_date'):
+            update_data['return_date'] = loan_update['return_date']
+        
+        if not update_data:
+            return None
+            
+        set_clause = ", ".join(f"{key} = ?" for key in update_data.keys())
+        values = list(update_data.values())
         values.append(loan_id)
         
         cursor.execute(
@@ -81,6 +84,7 @@ def update_loan(loan_id: int, loan_data: dict):
         return get_loan(loan_id)
     finally:
         conn.close()
+
 
 #delete book loan
 def delete_loan(loan_id: int):
