@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from .routers import books, users, reviews, loans
+from app.routers import books, users, reviews, loans
 
 app = FastAPI()
 

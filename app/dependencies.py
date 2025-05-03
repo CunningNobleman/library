@@ -1,9 +1,10 @@
 from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
 from jose import JWTError, jwt
+from datetime import datetime, timedelta
 from .models import TokenData
 from .crud.users import get_user
-from .database import SessionLocal
+from .database import get_db_connection
 
 SECRET_KEY = "your-secret-key"
 ALGORITHM = "HS256"
@@ -24,8 +25,19 @@ async def get_current_user(token: str = Depends(oauth2_scheme)):
     except JWTError:
         raise credentials_exception
     
-    db = SessionLocal()
-    user = get_user(db, username=token_data.username)
-    if user is None:
-        raise credentials_exception
-    return user
+    db = get_db_connection()
+    try:
+        user = get_user(db, username=token_data.username)
+        return user
+    finally:
+        db.close()
+    
+def create_access_token(data: dict, expires_delta: timedelta = None):
+    to_encode = data.copy()
+    if expires_delta:
+        expire = datetime.utcnow() + expires_delta
+    else:
+        expire = datetime.utcnow() + timedelta(minutes=15)
+    to_encode.update({"exp": expire})
+    encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
+    return encoded_jwt
