@@ -1,15 +1,34 @@
-from sqlalchemy.orm import Session
-from .. import schemas
+from ..database import get_db_connection
 
-def get_book(db: Session, book_id: int):
-    return db.query(schemas.Book).filter(schemas.Book.book_id == book_id).first()
+# Get book by id
+def get_book(book_id: int):
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute('SELECT * FROM books WHERE book_id = ?', (book_id,))
+    book = cursor.fetchone()
+    conn.close()
+    return dict(book) if book else None
 
-def get_books(db: Session, skip: int = 0, limit: int = 100):
-    return db.query(schemas.Book).offset(skip).limit(limit).all()
+# Select number of books
+def get_books(skip: int = 0, limit: int = 100):
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute('SELECT * FROM books LIMIT ? OFFSET ?', (limit, skip))
+    books = cursor.fetchall()
+    conn.close()
+    return [dict(book) for book in books]
 
-def create_book(db: Session, book: schemas.BookCreate):
-    db_book = schemas.Book(**book.dict())
-    db.add(db_book)
-    db.commit()
-    db.refresh(db_book)
-    return db_book
+# Add new book
+def create_book(book_data: dict):
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute(
+        'INSERT INTO books (title, author, year) VALUES (?, ?, ?)',
+        (book_data['title'], book_data['author'], book_data['year'])
+    )
+    conn.commit()
+    book_id = cursor.lastrowid
+    cursor.execute('SELECT * FROM books WHERE book_id = ?', (book_id,))
+    new_book = dict(cursor.fetchone())
+    conn.close()
+    return new_book
