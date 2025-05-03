@@ -62,3 +62,33 @@ def return_loan(loan_id: int):
     updated_loan = dict(cursor.fetchone())
     conn.close()
     return updated_loan
+
+
+# Update book loan
+def update_loan(loan_id: int, loan_data: dict):
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    try:
+        set_clause = ", ".join(f"{key} = ?" for key in loan_data.keys())
+        values = list(loan_data.values())
+        values.append(loan_id)
+        
+        cursor.execute(
+            f"UPDATE book_loans SET {set_clause} WHERE loan_id = ?",
+            values
+        )
+        conn.commit()
+        return get_loan(loan_id)
+    finally:
+        conn.close()
+
+#delete book loan
+def delete_loan(loan_id: int):
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    try:
+        cursor.execute("DELETE FROM book_loans WHERE loan_id = ?", (loan_id,))
+        conn.commit()
+        return cursor.rowcount > 0
+    finally:
+        conn.close()

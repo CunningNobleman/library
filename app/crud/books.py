@@ -32,3 +32,46 @@ def create_book(book_data: dict):
     new_book = dict(cursor.fetchone())
     conn.close()
     return new_book
+
+#update book
+def update_book(book_id: int, book_update: dict):
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    try:
+        update_data = {}
+        
+        if book_update.get('title'):
+            update_data['title'] = book_update['title']
+        
+        if book_update.get('author'):
+            update_data['author'] = book_update['author']
+        
+        if book_update.get('year'):
+            update_data['year'] = book_update['year']
+        
+        if not update_data:
+            return None
+            
+        set_clause = ", ".join(f"{key} = ?" for key in update_data.keys())
+        values = list(update_data.values())
+        values.append(book_id)
+        
+        cursor.execute(
+            f"UPDATE books SET {set_clause} WHERE book_id = ?",
+            values
+        )
+        conn.commit()
+        return get_book(book_id)
+    finally:
+        conn.close()
+
+#delete book
+def delete_book(book_id: int):
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    try:
+        cursor.execute("DELETE FROM books WHERE book_id = ?", (book_id,))
+        conn.commit()
+        return cursor.rowcount > 0
+    finally:
+        conn.close()

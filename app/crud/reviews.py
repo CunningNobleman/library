@@ -1,4 +1,3 @@
-from datetime import datetime
 from ..database import get_db_connection
 
 #get review by id
@@ -51,3 +50,14 @@ def create_review(review_data: dict):
     new_review = dict(cursor.fetchone())
     conn.close()
     return new_review
+
+#delete review
+def delete_review(review_id: int):
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    try:
+        cursor.execute("DELETE FROM reviews WHERE review_id = ?", (review_id,))
+        conn.commit()
+        return cursor.rowcount > 0
+    finally:
+        conn.close()

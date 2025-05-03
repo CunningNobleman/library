@@ -67,3 +67,20 @@ class Token(BaseModel):
 
 class TokenData(BaseModel):
     username: Optional[str] = None
+
+class UserUpdate(BaseModel):
+    username: str | None = None
+    email: str | None = None
+    password: str | None = None
+
+class BookUpdate(BaseModel):
+    title: str | None = None
+    author: str | None = None
+    year: int | None = None
+
+class LoanUpdate(BaseModel):
+    user_id: int | None = None
+    book_id: int | None = None
+    loan_date: str | None = None
+    return_date: str | None = None
+    due_date: str | None = None

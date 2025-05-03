@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException
 from ..models import Review, ReviewCreate
-from ..crud.reviews import get_reviews_by_book, create_review
+from ..crud.reviews import get_reviews_by_book, create_review, delete_review
 from ..dependencies import get_current_user
 
 router = APIRouter(prefix="/reviews", tags=["reviews"])
@@ -20,3 +20,9 @@ def create_review_route(
 @router.get("/book/{book_id}", response_model=list[Review])
 def read_reviews_by_book(book_id: int):
     return get_reviews_by_book(book_id)
+
+@router.delete("/{review_id}")
+def delete_review_route(review_id: int):
+    if not delete_review(review_id):
+        raise HTTPException(status_code=404, detail="Review not found")
+    return {"message": "Review deleted successfully"}

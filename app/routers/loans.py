@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException
 from ..models import Loan, LoanCreate
-from ..crud.loans import get_user_loans, create_loan, return_loan, get_loan
-from ..dependencies import get_current_user
+from ..crud.loans import get_user_loans, create_loan, return_loan, get_loan, update_loan, delete_loan
+from ..dependencies import get_current_user 
 
 router = APIRouter(prefix="/loans", tags=["loans"])
 
@@ -35,3 +35,16 @@ def return_loan_route(
         raise HTTPException(status_code=400, detail="Book already returned")
     
     return return_loan(loan_id)
+
+@router.put("/{loan_id}")
+def update_loan_route(loan_id: int, loan_data: dict):
+    updated_loan = update_loan(loan_id, loan_data)
+    if not updated_loan:
+        raise HTTPException(status_code=404, detail="Loan not found")
+    return updated_loan
+
+@router.delete("/{loan_id}")
+def delete_loan_route(loan_id: int):
+    if not delete_loan(loan_id):
+        raise HTTPException(status_code=404, detail="Loan not found")
+    return {"message": "Loan deleted successfully"}

@@ -36,3 +36,48 @@ def authenticate_user(username: str, password: str):
     if not pwd_context.verify(password, user['hashed_password']):
         return False
     return user
+
+#update user information
+def update_user(username: str, user_update: dict):
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    try:
+        update_data = {}
+        
+        if user_update.get('username'):
+            update_data['username'] = user_update['username']
+        
+        if user_update.get('email'):
+            update_data['email'] = user_update['email']
+        
+        if user_update.get('password'):
+            update_data['hashed_password'] = pwd_context.hash(user_update['password'])
+        
+        if not update_data:
+            return None
+            
+        set_clause = ", ".join(f"{key} = ?" for key in update_data.keys())
+        values = list(update_data.values())
+        values.append(username)
+        
+        cursor.execute(
+            f"UPDATE users SET {set_clause} WHERE username = ?",
+            values
+        )
+        conn.commit()
+        
+        updated_username = update_data.get('username', username)
+        return get_user(updated_username)
+    finally:
+        conn.close()
+
+#delete user
+def delete_user(username: str):
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    try:
+        cursor.execute("DELETE FROM users WHERE username = ?", (username,))
+        conn.commit()
+        return cursor.rowcount > 0
+    finally:
+        conn.close()
