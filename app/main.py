@@ -1,10 +1,12 @@
 from fastapi import FastAPI
 from app.routers import books, users, reviews, loans
 
-app = FastAPI()
-
-app.swagger_ui_oauth2_redirect_url = None
-app.swagger_ui_init_oauth = None
+app = FastAPI(
+    swagger_ui_parameters={
+        "oauth2RedirectUrl": None,
+        "displayRequestDuration": True
+    }
+)
 
 app.include_router(users.router)
 app.include_router(books.router)

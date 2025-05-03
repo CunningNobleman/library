@@ -8,16 +8,18 @@ router = APIRouter(prefix="/books", tags=["books"])
 @router.post(
     "/", 
     response_model=Book,
-    status_code=status.HTTP_201_CREATED,
-    dependencies=[Depends(get_current_user)]
+    status_code=status.HTTP_201_CREATED
 )
-def create_book_route(book: BookCreate):
-    """Create a new book"""
+async def create_book_route(
+    book: BookCreate,
+    current_user: dict = Depends(get_current_user)
+):
+    """Create a new book (requires authentication)"""
     return create_book(book.dict())
 
 @router.get("/", response_model=list[Book])
 def read_books(skip: int = 0, limit: int = 100):
-    """Get all books"""
+    """Get all books (public access)"""
     return get_books(skip, limit)
 
 @router.get("/{book_id}", response_model=Book)
