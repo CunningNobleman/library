@@ -43,7 +43,7 @@ def create_review(review_data: dict):
         (review_data['book_id'], 
          review_data['user_id'],
          review_data['rating'],
-         review_data.get('comment'))
+         review_data.get('comment')))
     
     conn.commit()
     review_id = cursor.lastrowid
