@@ -25,7 +25,6 @@ def read_user_loans(current_user: dict = Depends(get_current_user)):
 def update_loan_route(
     loan_id: int,
     loan_update: LoanUpdate,
-    current_user: dict = Depends(get_current_user)  # Add auth if needed
 ):
     db_loan = get_loan(loan_id)
     if not db_loan:
