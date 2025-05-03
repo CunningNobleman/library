@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException
 from ..models import Loan, LoanCreate
-from ..crud.loans import get_user_loans, create_loan, return_loan
+from ..crud.loans import get_user_loans, create_loan, return_loan, get_loan
 from ..dependencies import get_current_user
 
 router = APIRouter(prefix="/loans", tags=["loans"])
@@ -26,7 +26,7 @@ def return_loan_route(
     loan_id: int,
     current_user: dict = Depends(get_current_user)
 ):
-    # Verify the loan belongs to the user
+    #verification
     loan = get_loan(loan_id)
     if not loan or loan['user_id'] != current_user['user_id']:
         raise HTTPException(status_code=404, detail="Loan not found")
