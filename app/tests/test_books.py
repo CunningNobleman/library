@@ -19,20 +19,31 @@ def test_book():
     delete_book(book["book_id"])
 
 def test_create_book():
-    #test data
+    #getting token
+    auth_response = client.post(
+        "/users/token",
+        data={"username": "testbooks", "password": "test"}
+    )
+    assert auth_response.status_code == 200
+    token = auth_response.json()["access_token"]
+
     test_data = {
         "title": "New Book",
         "author": "Author",
         "year": 2023
     }
     
-    response = client.post("/books/", json=test_data)
+    response = client.post(
+        "/books/",
+        json=test_data,
+        headers={"Authorization": f"Bearer {token}"}
+    )
     assert response.status_code == 201
     response_data = response.json()
     assert "book_id" in response_data
     assert response_data["title"] == test_data["title"]
     
-    #verification of book existence
+    #existence verification
     db_book = client.get(f"/books/{response_data['book_id']}").json()
     assert db_book["book_id"] == response_data["book_id"]
 
