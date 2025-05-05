@@ -132,11 +132,112 @@ def test_update_book():
     assert response.json()["title"] == "Updated Title"
 
 def test_delete_book():
-    """Test deleting book (public)"""
+    """Test deleting book"""
     response = client.delete(f"/books/{test_book_id}")
     assert response.status_code == 200
     assert response.json()["message"] == "Book deleted successfully"
     
-    # Verify deletion
+    #verify
     response = client.get(f"/books/{test_book_id}")
     assert response.status_code == 404
+
+#loan test data
+TEST_LOAN = {
+    "book_id": 1,
+    "loan_date": "2023-01-01",
+    "due_date": "2023-02-01"
+}
+
+#same for review
+TEST_REVIEW = {
+    "book_id": 1,
+    "rating": 5,
+    "comment": "Excellent book!"
+}
+
+test_loan_id = None
+test_review_id = None
+
+def test_create_loan():
+    """Test loan creation"""
+    global test_loan_id
+    
+    auth = client.post(
+        "/users/token",
+        data={"username": "testuser", "password": "testpass"}
+    )
+    token = auth.json()["access_token"]
+    
+    # Create loan
+    response = client.post(
+        "/loans/",
+        json=TEST_LOAN,
+        headers={"Authorization": f"Bearer {token}"}
+    )
+    assert response.status_code == 200
+    test_loan_id = response.json()["loan_id"]
+
+def test_get_user_loans():
+    """Test getting user's loans"""
+    auth = client.post(
+        "/users/token",
+        data={"username": "testuser", "password": "testpass"}
+    )
+    token = auth.json()["access_token"]
+    
+    response = client.get(
+        "/loans/my-loans",
+        headers={"Authorization": f"Bearer {token}"}
+    )
+    assert response.status_code == 200
+    assert isinstance(response.json(), list)
+    assert len(response.json()) > 0
+
+def test_update_loan():
+    """Test updating loan"""
+    update_data = {"due_date": "2023-03-01"}
+    response = client.put(
+        f"/loans/{test_loan_id}",
+        json=update_data
+    )
+    assert response.status_code == 200
+    assert response.json()["due_date"] == "2023-03-01"
+
+def test_delete_loan():
+    """Test deleting loan"""
+    response = client.delete(f"/loans/{test_loan_id}")
+    assert response.status_code == 200
+    assert response.json()["message"] == "Loan deleted successfully"
+
+def test_create_review():
+    """Test review creation"""
+    global test_review_id
+    
+    # Get auth token
+    auth = client.post(
+        "/users/token",
+        data={"username": "testuser", "password": "testpass"}
+    )
+    token = auth.json()["access_token"]
+    
+    # Create review
+    response = client.post(
+        "/reviews/",
+        json=TEST_REVIEW,
+        headers={"Authorization": f"Bearer {token}"}
+    )
+    assert response.status_code == 200
+    test_review_id = response.json()["review_id"]
+
+def test_get_reviews_by_book():
+    """Test getting reviews for a book"""
+    response = client.get(f"/reviews/book/{TEST_REVIEW['book_id']}")
+    assert response.status_code == 200
+    assert isinstance(response.json(), list)
+    assert len(response.json()) > 0
+
+def test_delete_review():
+    """Test deleting review"""
+    response = client.delete(f"/reviews/{test_review_id}")
+    assert response.status_code == 200
+    assert response.json()["message"] == "Review deleted successfully"
