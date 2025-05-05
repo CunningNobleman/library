@@ -93,7 +93,7 @@ def test_create_book():
     """Test book creation"""
     auth = client.post(
         "/users/token",
-        data={"username": "testuser", "password": "testpass"}
+        data={"username": "testbooks", "password": "test"}
     )
     token = auth.json()["access_token"]
     
