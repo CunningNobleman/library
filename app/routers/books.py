@@ -14,7 +14,7 @@ async def create_book_route(
     book: BookCreate,
     current_user: dict = Depends(get_current_user)
 ):
-    """Create a new book (requires authentication)"""
+    """Create a new book"""
     return create_book(book.dict())
 
 @router.get("/", response_model=list[Book])
@@ -24,7 +24,7 @@ def read_books(skip: int = 0, limit: int = 100):
 
 @router.get("/{book_id}", response_model=Book)
 def read_book(book_id: int):
-    """Get a specific book by ID (public access)"""
+    """Get a specific book by ID"""
     book = get_book(book_id)
     if not book:
         raise HTTPException(

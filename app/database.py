@@ -1,5 +1,4 @@
 import sqlite3
-from sqlite3 import Connection
 
 def get_db_connection():
     conn = sqlite3.connect('library.db')
