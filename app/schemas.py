@@ -1,8 +1,10 @@
+'''this module establishes class structure for the database'''
 from sqlalchemy import Column, Integer, String, Boolean, ForeignKey, DateTime
 from sqlalchemy.sql import func
 from .database import Base
 
 class User(Base):
+    ''''''
     __tablename__ = "users"
 
     user_id = Column(Integer, primary_key=True, index=True)
@@ -12,6 +14,7 @@ class User(Base):
     disabled = Column(Boolean, default=False)
 
 class Book(Base):
+    ''''''
     __tablename__ = "books"
 
     book_id = Column(Integer, primary_key=True, index=True)
@@ -20,6 +23,7 @@ class Book(Base):
     year = Column(Integer)
 
 class Review(Base):
+    ''''''
     __tablename__ = "reviews"
 
     review_id = Column(Integer, primary_key=True, index=True)
@@ -30,6 +34,7 @@ class Review(Base):
     created_at = Column(DateTime(timezone=True), server_default=func.now())
 
 class BookLoan(Base):
+    ''''''
     __tablename__ = "book_loans"
 
     loan_id = Column(Integer, primary_key=True, index=True)

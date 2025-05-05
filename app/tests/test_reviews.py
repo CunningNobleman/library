@@ -1,3 +1,4 @@
+'''testing reviews crud operations'''
 import pytest
 from fastapi.testclient import TestClient
 from ..main import app
@@ -18,6 +19,7 @@ TEST_REVIEW = {
 
 @pytest.fixture(scope="module")
 def auth_token():
+    '''authorization'''
     response = client.post(
         "/users/token",
         data={"username": TEST_USER["username"], "password": TEST_USER["password"]}
@@ -29,6 +31,7 @@ def auth_token():
 
 @pytest.fixture
 def test_book(auth_token):
+    '''fixture'''
 
     response = client.post(
         "/books/",
@@ -45,6 +48,7 @@ def test_book(auth_token):
 
 @pytest.fixture
 def test_review(auth_token, test_book):
+    '''fixture'''
 
     review_data = {
         "book_id": test_book["book_id"],
@@ -65,6 +69,7 @@ def test_review(auth_token, test_book):
     conn.close()
 
 def test_create_review(auth_token, test_book):
+    '''creating a review'''
     response = client.post(
         "/reviews/",
         json={
@@ -78,39 +83,42 @@ def test_create_review(auth_token, test_book):
     review = response.json()
     assert "review_id" in review
     assert review["book_id"] == test_book["book_id"]
-    assert review["user_id"] == 5  
+    assert review["user_id"] == 5
     assert review["rating"] == 4
 
 def test_get_reviews_by_book(test_review, test_book):
+    '''testing getting all reviews of a particular book'''
     response = client.get(f"/reviews/book/{test_book['book_id']}")
     assert response.status_code == 200
     reviews = response.json()
     assert isinstance(reviews, list)
     assert len(reviews) > 0
     assert reviews[0]["review_id"] == test_review["review_id"]
-    assert "username" in reviews[0] 
+    assert "username" in reviews[0]
 
 def test_delete_review(auth_token, test_review):
+    '''testing deletion of entries'''
     response = client.delete(
         f"/reviews/{test_review['review_id']}",
         headers={"Authorization": f"Bearer {auth_token['token']}"}
     )
     assert response.status_code == 200
     assert response.json()["message"] == "Review deleted successfully"
-    
+
     conn = get_db_connection()
     result = conn.execute(
-        "SELECT 1 FROM reviews WHERE review_id = ?", 
+        "SELECT 1 FROM reviews WHERE review_id = ?",
         (test_review["review_id"],)
     ).fetchone()
     conn.close()
     assert result is None
 
 def test_create_review_invalid_book(auth_token):
+    '''testing creaing a review'''
     response = client.post(
         "/reviews/",
         json={
-            "book_id": 9999,  
+            "book_id": 9999,
             "rating": 3,
             "comment": "Not bad"
         },

@@ -1,7 +1,8 @@
+'''router for loans table'''
 from fastapi import APIRouter, Depends, HTTPException
 from ..models import Loan, LoanCreate, LoanUpdate
 from ..crud.loans import get_user_loans, create_loan, get_loan, update_loan, delete_loan
-from ..dependencies import get_current_user 
+from ..dependencies import get_current_user
 
 router = APIRouter(prefix="/loans", tags=["loans"])
 
@@ -10,6 +11,7 @@ def create_loan_route(
     loan: LoanCreate,
     current_user: dict = Depends(get_current_user)
 ):
+    '''creating a new loan router'''
     try:
         loan_data = loan.dict()
         loan_data['user_id'] = current_user['user_id']
@@ -19,6 +21,7 @@ def create_loan_route(
 
 @router.get("/my-loans", response_model=list[Loan])
 def read_user_loans(current_user: dict = Depends(get_current_user)):
+    '''reading user loans by id'''
     return get_user_loans(current_user['user_id'])
 
 @router.put("/{loan_id}")
@@ -26,23 +29,25 @@ def update_loan_route(
     loan_id: int,
     loan_update: LoanUpdate,
 ):
+    '''updating an entry'''
     db_loan = get_loan(loan_id)
     if not db_loan:
         raise HTTPException(status_code=404, detail="Loan not found")
-    
+
     update_data = loan_update.dict(exclude_unset=True)
     updated_loan = update_loan(loan_id, update_data)
-    
+
     if not updated_loan:
         raise HTTPException(
             status_code=400,
             detail="No valid fields provided for update"
         )
-    
+
     return updated_loan
 
 @router.delete("/{loan_id}")
 def delete_loan_route(loan_id: int):
+    '''deleting an entry'''
     if not delete_loan(loan_id):
         raise HTTPException(status_code=404, detail="Loan not found")
     return {"message": "Loan deleted successfully"}

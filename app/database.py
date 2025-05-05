@@ -1,15 +1,17 @@
+'''This module handles getting current connection to the database, initializing it'''
 import sqlite3
 
 def get_db_connection():
+    """getting current connection to the database"""
     conn = sqlite3.connect('library.db')
-    conn.row_factory = sqlite3.Row  # Access columns by name
+    conn.row_factory = sqlite3.Row
     return conn
 
 def init_db():
+    '''initializing the database'''
     conn = get_db_connection()
     cursor = conn.cursor()
-    
-    # Users
+    #Users
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS users (
             user_id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -19,8 +21,7 @@ def init_db():
             disabled BOOLEAN DEFAULT FALSE
         )
     ''')
-    
-    # Books
+    #Books
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS books (
             book_id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -29,7 +30,6 @@ def init_db():
             year INTEGER NOT NULL
         )
     ''')
-    
     #Reviews
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS reviews (
@@ -43,8 +43,7 @@ def init_db():
             FOREIGN KEY (user_id) REFERENCES users(user_id)
         )
     ''')
-    
-    #Book loans/ borrows
+    #Book loans/borrows
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS book_loans (
             loan_id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -57,9 +56,7 @@ def init_db():
             FOREIGN KEY (user_id) REFERENCES users(user_id)
         )
     ''')
-    
     conn.commit()
     conn.close()
-
 
 init_db()

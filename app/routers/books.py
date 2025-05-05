@@ -6,7 +6,7 @@ from ..dependencies import get_current_user
 router = APIRouter(prefix="/books", tags=["books"])
 
 @router.post(
-    "/", 
+    "/",
     response_model=Book,
     status_code=status.HTTP_201_CREATED
 )
@@ -35,23 +35,25 @@ def read_book(book_id: int):
 
 @router.put("/{book_id}", response_model=Book)
 def update_book_route(
-    book_id: int, 
+    book_id: int,
     book_update: BookUpdate
 ):
+    '''updating a book entry router'''
     db_book = get_book(book_id)
     if not db_book:
         raise HTTPException(status_code=404, detail="Book not found")
-    
+
     update_data = book_update.dict(exclude_unset=True)
     updated_book = update_book(book_id, update_data)
-    
+
     if not updated_book:
         raise HTTPException(status_code=400, detail="No valid fields provided for update")
-    
+
     return updated_book
 
 @router.delete("/{book_id}")
 def delete_book_route(book_id: int):
+    '''deleting an entry router'''
     if not get_book(book_id):
         raise HTTPException(status_code=404, detail="Book not found")
     if not delete_book(book_id):

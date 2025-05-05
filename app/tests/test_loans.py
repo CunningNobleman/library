@@ -1,6 +1,7 @@
+'''testing loan crud operations'''
+from datetime import datetime, timedelta
 import pytest
 from fastapi.testclient import TestClient
-from datetime import datetime, timedelta
 from ..main import app
 from ..database import get_db_connection
 
@@ -13,6 +14,7 @@ TEST_USER = {
 
 @pytest.fixture(scope="module")
 def auth_token():
+    '''getting token to authorize'''
 
     response = client.post(
         "/users/token",
@@ -20,12 +22,13 @@ def auth_token():
     )
     return {
         "token": response.json()["access_token"],
-        "user_id": 5 
+        "user_id": 5
     }
 
 @pytest.fixture
 def test_book(auth_token):
- 
+    '''fixture'''
+
     response = client.post(
         "/books/",
         json={"title": "Loan Test Book", "author": "Test", "year": 2023},
@@ -41,6 +44,7 @@ def test_book(auth_token):
 
 @pytest.fixture
 def test_loan(auth_token, test_book):
+    '''fixture'''
 
     response = client.post(
         "/loans/",
@@ -56,6 +60,7 @@ def test_loan(auth_token, test_book):
     conn.close()
 
 def test_create_loan(auth_token, test_book):
+    '''testing loan creation'''
     response = client.post(
         "/loans/",
         json={"book_id": test_book["book_id"]},
@@ -65,9 +70,10 @@ def test_create_loan(auth_token, test_book):
     loan = response.json()
     assert "loan_id" in loan
     assert loan["book_id"] == test_book["book_id"]
-    assert loan["user_id"] == 5  
+    assert loan["user_id"] == 5
 
 def test_get_user_loans(auth_token, test_loan):
+    '''testing getting all loans of the user'''
     response = client.get(
         "/loans/my-loans",
         headers={"Authorization": f"Bearer {auth_token['token']}"}
@@ -78,6 +84,7 @@ def test_get_user_loans(auth_token, test_loan):
     assert any(loan["loan_id"] == test_loan["loan_id"] for loan in loans)
 
 def test_update_loan(auth_token, test_loan):
+    '''testing updating an entry'''
     new_due_date = (datetime.now() + timedelta(days=21)).strftime("%Y-%m-%d")
     response = client.put(
         f"/loans/{test_loan['loan_id']}",
@@ -88,15 +95,16 @@ def test_update_loan(auth_token, test_loan):
     assert response.json()["due_date"] == new_due_date
 
 def test_delete_loan(auth_token, test_loan):
+    '''testing deleting an entry'''
     response = client.delete(
         f"/loans/{test_loan['loan_id']}",
         headers={"Authorization": f"Bearer {auth_token['token']}"}
     )
     assert response.status_code == 200
-   
+
     conn = get_db_connection()
     result = conn.execute(
-        "SELECT 1 FROM book_loans WHERE loan_id = ?", 
+        "SELECT 1 FROM book_loans WHERE loan_id = ?",
         (test_loan["loan_id"],)
     ).fetchone()
     conn.close()

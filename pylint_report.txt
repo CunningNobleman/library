@@ -1,0 +1,326 @@
+************* Module app.dependencies
+app\dependencies.py:35:0: C0303: Trailing whitespace (trailing-whitespace)
+app\dependencies.py:34:8: W0707: Consider explicitly re-raising using 'except JWTError as exc' and 'raise credentials_exception from exc' (raise-missing-from)
+************* Module app.main
+app\main.py:19:0: C0304: Final newline missing (missing-final-newline)
+app\main.py:1:0: C0114: Missing module docstring (missing-module-docstring)
+app\main.py:18:0: C0116: Missing function or method docstring (missing-function-docstring)
+************* Module app.models
+app\models.py:35:0: C0303: Trailing whitespace (trailing-whitespace)
+app\models.py:54:0: C0303: Trailing whitespace (trailing-whitespace)
+app\models.py:74:0: C0303: Trailing whitespace (trailing-whitespace)
+app\models.py:6:0: C0112: Empty class docstring (empty-docstring)
+app\models.py:12:0: C0112: Empty class docstring (empty-docstring)
+app\models.py:14:4: W0107: Unnecessary pass statement (unnecessary-pass)
+app\models.py:16:0: C0112: Empty class docstring (empty-docstring)
+app\models.py:19:4: C0115: Missing class docstring (missing-class-docstring)
+app\models.py:19:4: R0903: Too few public methods (0/2) (too-few-public-methods)
+app\models.py:22:0: C0112: Empty class docstring (empty-docstring)
+app\models.py:27:0: C0112: Empty class docstring (empty-docstring)
+app\models.py:31:0: C0112: Empty class docstring (empty-docstring)
+app\models.py:36:4: C0112: Empty class docstring (empty-docstring)
+app\models.py:36:4: R0903: Too few public methods (0/2) (too-few-public-methods)
+app\models.py:40:0: C0112: Empty class docstring (empty-docstring)
+app\models.py:45:0: C0112: Empty class docstring (empty-docstring)
+app\models.py:49:0: C0112: Empty class docstring (empty-docstring)
+app\models.py:55:4: C0112: Empty class docstring (empty-docstring)
+app\models.py:55:4: R0903: Too few public methods (0/2) (too-few-public-methods)
+app\models.py:59:0: C0112: Empty class docstring (empty-docstring)
+app\models.py:63:0: C0112: Empty class docstring (empty-docstring)
+app\models.py:65:4: W0107: Unnecessary pass statement (unnecessary-pass)
+app\models.py:67:0: C0112: Empty class docstring (empty-docstring)
+app\models.py:75:4: C0112: Empty class docstring (empty-docstring)
+app\models.py:75:4: R0903: Too few public methods (0/2) (too-few-public-methods)
+app\models.py:79:0: C0112: Empty class docstring (empty-docstring)
+app\models.py:84:0: C0112: Empty class docstring (empty-docstring)
+************* Module app.schemas
+app\schemas.py:4:0: E0611: No name 'Base' in module 'app.database' (no-name-in-module)
+app\schemas.py:6:0: C0112: Empty class docstring (empty-docstring)
+app\schemas.py:6:0: R0903: Too few public methods (0/2) (too-few-public-methods)
+app\schemas.py:16:0: C0112: Empty class docstring (empty-docstring)
+app\schemas.py:16:0: R0903: Too few public methods (0/2) (too-few-public-methods)
+app\schemas.py:25:0: C0112: Empty class docstring (empty-docstring)
+app\schemas.py:25:0: R0903: Too few public methods (0/2) (too-few-public-methods)
+app\schemas.py:36:0: C0112: Empty class docstring (empty-docstring)
+app\schemas.py:36:0: R0903: Too few public methods (0/2) (too-few-public-methods)
+************* Module app.crud.books
+app\crud\books.py:49:0: C0303: Trailing whitespace (trailing-whitespace)
+app\crud\books.py:52:0: C0303: Trailing whitespace (trailing-whitespace)
+app\crud\books.py:55:0: C0303: Trailing whitespace (trailing-whitespace)
+app\crud\books.py:58:0: C0303: Trailing whitespace (trailing-whitespace)
+app\crud\books.py:62:0: C0303: Trailing whitespace (trailing-whitespace)
+app\crud\books.py:59:55: C0201: Consider iterating the dictionary directly instead of calling .keys() (consider-iterating-dictionary)
+************* Module app.crud.loans
+app\crud\loans.py:79:55: C0201: Consider iterating the dictionary directly instead of calling .keys() (consider-iterating-dictionary)
+************* Module app.crud.users
+app\crud\users.py:64:55: C0201: Consider iterating the dictionary directly instead of calling .keys() (consider-iterating-dictionary)
+************* Module app.routers.bookranking
+app\routers\bookranking.py:56:8: W0707: Consider explicitly re-raising using 'raise HTTPException(status_code=500, detail=f'Database error: {str(e)}') from e' (raise-missing-from)
+************* Module app.routers.books
+app\routers\books.py:1:0: C0114: Missing module docstring (missing-module-docstring)
+app\routers\books.py:15:4: W0613: Unused argument 'current_user' (unused-argument)
+************* Module app.routers.loans
+app\routers\loans.py:20:8: W0707: Consider explicitly re-raising using 'raise HTTPException(status_code=400, detail=str(e)) from e' (raise-missing-from)
+************* Module app.routers.reviews
+app\routers\reviews.py:20:8: W0707: Consider explicitly re-raising using 'raise HTTPException(status_code=400, detail=str(e)) from e' (raise-missing-from)
+************* Module app.tests.test_books
+app\tests\test_books.py:52:18: W0621: Redefining name 'test_book' from outer scope (line 16) (redefined-outer-name)
+app\tests\test_books.py:58:21: W0621: Redefining name 'test_book' from outer scope (line 16) (redefined-outer-name)
+app\tests\test_books.py:69:21: W0621: Redefining name 'test_book' from outer scope (line 16) (redefined-outer-name)
+************* Module app.tests.test_loans
+app\tests\test_loans.py:29:14: W0621: Redefining name 'auth_token' from outer scope (line 16) (redefined-outer-name)
+app\tests\test_loans.py:46:14: W0621: Redefining name 'auth_token' from outer scope (line 16) (redefined-outer-name)
+app\tests\test_loans.py:46:26: W0621: Redefining name 'test_book' from outer scope (line 29) (redefined-outer-name)
+app\tests\test_loans.py:62:21: W0621: Redefining name 'auth_token' from outer scope (line 16) (redefined-outer-name)
+app\tests\test_loans.py:62:33: W0621: Redefining name 'test_book' from outer scope (line 29) (redefined-outer-name)
+app\tests\test_loans.py:75:24: W0621: Redefining name 'auth_token' from outer scope (line 16) (redefined-outer-name)
+app\tests\test_loans.py:75:36: W0621: Redefining name 'test_loan' from outer scope (line 46) (redefined-outer-name)
+app\tests\test_loans.py:86:21: W0621: Redefining name 'auth_token' from outer scope (line 16) (redefined-outer-name)
+app\tests\test_loans.py:86:33: W0621: Redefining name 'test_loan' from outer scope (line 46) (redefined-outer-name)
+app\tests\test_loans.py:97:21: W0621: Redefining name 'auth_token' from outer scope (line 16) (redefined-outer-name)
+app\tests\test_loans.py:97:33: W0621: Redefining name 'test_loan' from outer scope (line 46) (redefined-outer-name)
+************* Module app.tests.test_reviews
+app\tests\test_reviews.py:33:14: W0621: Redefining name 'auth_token' from outer scope (line 21) (redefined-outer-name)
+app\tests\test_reviews.py:50:16: W0621: Redefining name 'auth_token' from outer scope (line 21) (redefined-outer-name)
+app\tests\test_reviews.py:50:28: W0621: Redefining name 'test_book' from outer scope (line 33) (redefined-outer-name)
+app\tests\test_reviews.py:71:23: W0621: Redefining name 'auth_token' from outer scope (line 21) (redefined-outer-name)
+app\tests\test_reviews.py:71:35: W0621: Redefining name 'test_book' from outer scope (line 33) (redefined-outer-name)
+app\tests\test_reviews.py:89:29: W0621: Redefining name 'test_review' from outer scope (line 50) (redefined-outer-name)
+app\tests\test_reviews.py:89:42: W0621: Redefining name 'test_book' from outer scope (line 33) (redefined-outer-name)
+app\tests\test_reviews.py:99:23: W0621: Redefining name 'auth_token' from outer scope (line 21) (redefined-outer-name)
+app\tests\test_reviews.py:99:35: W0621: Redefining name 'test_review' from outer scope (line 50) (redefined-outer-name)
+app\tests\test_reviews.py:116:36: W0621: Redefining name 'auth_token' from outer scope (line 21) (redefined-outer-name)
+************* Module app.tests.__init__
+app\tests\__init__.py:1:0: R0801: Similar lines in 2 files
+==app.tests.test_loans:[12:33]
+==app.tests.test_reviews:[17:37]
+}
+
+@pytest.fixture(scope="module")
+def auth_token():
+    '''authorization'''
+    response = client.post(
+        "/users/token",
+        data={"username": TEST_USER["username"], "password": TEST_USER["password"]}
+    )
+    return {
+        "token": response.json()["access_token"],
+        "user_id": 5
+    }
+
+@pytest.fixture
+def test_book(auth_token):
+    '''fixture'''
+
+    response = client.post(
+        "/books/", (duplicate-code)
+app\tests\__init__.py:1:0: R0801: Similar lines in 2 files
+==app.tests.test_loans:[34:48]
+==app.tests.test_reviews:[38:52]
+        headers={"Authorization": f"Bearer {auth_token['token']}"}
+    )
+    book = response.json()
+    yield book
+
+    conn = get_db_connection()
+    conn.execute("DELETE FROM books WHERE book_id = ?", (book["book_id"],))
+    conn.commit()
+    conn.close()
+
+@pytest.fixture
+def test_loan(auth_token, test_book):
+    '''fixture'''
+ (duplicate-code)
+app\tests\__init__.py:1:0: R0801: Similar lines in 2 files
+==app.crud.books:[68:77]
+==app.crud.loans:[88:98]
+    finally:
+        conn.close()
+
+
+#delete book loan
+def delete_loan(loan_id: int):
+    '''deleting an entry'''
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    try: (duplicate-code)
+
+
+Report
+======
+661 statements analysed.
+
+Statistics by type
+------------------
+
++---------+-------+-----------+-----------+------------+---------+
+|type     |number |old number |difference |%documented |%badname |
++=========+=======+===========+===========+============+=========+
+|module   |22     |22         |=          |90.91       |0.00     |
++---------+-------+-----------+-----------+------------+---------+
+|class    |26     |26         |=          |15.38       |0.00     |
++---------+-------+-----------+-----------+------------+---------+
+|method   |0      |NC         |NC         |0           |0        |
++---------+-------+-----------+-----------+------------+---------+
+|function |64     |64         |=          |98.44       |0.00     |
++---------+-------+-----------+-----------+------------+---------+
+
+
+
+External dependencies
+---------------------
+::
+
+    app 
+      \-crud 
+      | \-books (app.routers.books,app.tests.test_books)
+      | \-loans (app.routers.loans)
+      | \-reviews (app.routers.reviews)
+      | \-users (app.routers.users)
+      \-database (app.crud.books,app.crud.loans,app.crud.reviews,app.crud.users,app.routers.bookranking,app.tests.test_loans,app.tests.test_reviews)
+      \-dependencies (app.routers.books,app.routers.loans,app.routers.reviews,app.routers.users)
+      \-main (app.tests.test_books,app.tests.test_loans,app.tests.test_reviews,app.tests.test_users)
+      \-models (app.routers.books,app.routers.loans,app.routers.reviews,app.routers.users)
+    fastapi (app.dependencies,app.main,app.routers.bookranking,app.routers.books,app.routers.loans,app.routers.reviews,app.routers.users)
+      \-security (app.dependencies,app.routers.users)
+      \-testclient (app.tests.test_books,app.tests.test_loans,app.tests.test_reviews,app.tests.test_users)
+    jose (app.dependencies)
+      \-jwt (app.dependencies)
+    passlib 
+      \-context (app.crud.users)
+    pydantic (app.models,app.routers.bookranking)
+    pytest (app.tests.test_books,app.tests.test_loans,app.tests.test_reviews)
+    sqlalchemy (app.schemas)
+      \-sql (app.schemas)
+
+
+
+1339 lines have been analyzed
+
+Raw metrics
+-----------
+
++----------+-------+------+---------+-----------+
+|type      |number |%     |previous |difference |
++==========+=======+======+=========+===========+
+|code      |956    |71.40 |NC       |NC         |
++----------+-------+------+---------+-----------+
+|docstring |164    |12.25 |NC       |NC         |
++----------+-------+------+---------+-----------+
+|comment   |35     |2.61  |NC       |NC         |
++----------+-------+------+---------+-----------+
+|empty     |184    |13.74 |NC       |NC         |
++----------+-------+------+---------+-----------+
+
+
+
+Duplication
+-----------
+
++-------------------------+------+---------+-----------+
+|                         |now   |previous |difference |
++=========================+======+=========+===========+
+|nb duplicated lines      |0     |0        |0          |
++-------------------------+------+---------+-----------+
+|percent duplicated lines |0.000 |0.000    |=          |
++-------------------------+------+---------+-----------+
+
+
+
+Messages by category
+--------------------
+
++-----------+-------+---------+-----------+
+|type       |number |previous |difference |
++===========+=======+=========+===========+
+|convention |38     |38       |38         |
++-----------+-------+---------+-----------+
+|refactor   |11     |11       |11         |
++-----------+-------+---------+-----------+
+|warning    |31     |31       |31         |
++-----------+-------+---------+-----------+
+|error      |1      |1        |1          |
++-----------+-------+---------+-----------+
+
+
+
+% errors / warnings by module
+-----------------------------
+
++------------------------+-------+--------+---------+-----------+
+|module                  |error  |warning |refactor |convention |
++========================+=======+========+=========+===========+
+|app.schemas             |100.00 |0.00    |36.36    |10.53      |
++------------------------+-------+--------+---------+-----------+
+|app.tests.test_loans    |0.00   |35.48   |0.00     |0.00       |
++------------------------+-------+--------+---------+-----------+
+|app.tests.test_reviews  |0.00   |32.26   |0.00     |0.00       |
++------------------------+-------+--------+---------+-----------+
+|app.tests.test_books    |0.00   |9.68    |0.00     |0.00       |
++------------------------+-------+--------+---------+-----------+
+|app.models              |0.00   |6.45    |36.36    |55.26      |
++------------------------+-------+--------+---------+-----------+
+|app.routers.books       |0.00   |3.23    |0.00     |2.63       |
++------------------------+-------+--------+---------+-----------+
+|app.dependencies        |0.00   |3.23    |0.00     |2.63       |
++------------------------+-------+--------+---------+-----------+
+|app.routers.reviews     |0.00   |3.23    |0.00     |0.00       |
++------------------------+-------+--------+---------+-----------+
+|app.routers.loans       |0.00   |3.23    |0.00     |0.00       |
++------------------------+-------+--------+---------+-----------+
+|app.routers.bookranking |0.00   |3.23    |0.00     |0.00       |
++------------------------+-------+--------+---------+-----------+
+|app.tests.__init__      |0.00   |0.00    |27.27    |0.00       |
++------------------------+-------+--------+---------+-----------+
+|app.crud.books          |0.00   |0.00    |0.00     |15.79      |
++------------------------+-------+--------+---------+-----------+
+|app.main                |0.00   |0.00    |0.00     |7.89       |
++------------------------+-------+--------+---------+-----------+
+|app.crud.users          |0.00   |0.00    |0.00     |2.63       |
++------------------------+-------+--------+---------+-----------+
+|app.crud.loans          |0.00   |0.00    |0.00     |2.63       |
++------------------------+-------+--------+---------+-----------+
+
+
+
+Messages
+--------
+
++------------------------------+------------+
+|message id                    |occurrences |
++==============================+============+
+|redefined-outer-name          |24          |
++------------------------------+------------+
+|empty-docstring               |21          |
++------------------------------+------------+
+|trailing-whitespace           |9           |
++------------------------------+------------+
+|too-few-public-methods        |8           |
++------------------------------+------------+
+|raise-missing-from            |4           |
++------------------------------+------------+
+|duplicate-code                |3           |
++------------------------------+------------+
+|consider-iterating-dictionary |3           |
++------------------------------+------------+
+|unnecessary-pass              |2           |
++------------------------------+------------+
+|missing-module-docstring      |2           |
++------------------------------+------------+
+|unused-argument               |1           |
++------------------------------+------------+
+|no-name-in-module             |1           |
++------------------------------+------------+
+|missing-function-docstring    |1           |
++------------------------------+------------+
+|missing-final-newline         |1           |
++------------------------------+------------+
+|missing-class-docstring       |1           |
++------------------------------+------------+
+
+
+
+
+------------------------------------------------------------------
+Your code has been rated at 8.71/10 (previous run: 8.71/10, +0.00)
+

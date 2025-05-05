@@ -1,7 +1,9 @@
+'''crud operations for books table'''
 from ..database import get_db_connection
 
 # Get book by id
 def get_book(book_id: int):
+    '''getting book by id'''
     conn = get_db_connection()
     cursor = conn.cursor()
     cursor.execute('SELECT * FROM books WHERE book_id = ?', (book_id,))
@@ -11,6 +13,7 @@ def get_book(book_id: int):
 
 # Select number of books
 def get_books(skip: int = 0, limit: int = 100):
+    '''getting number of books'''
     conn = get_db_connection()
     cursor = conn.cursor()
     cursor.execute('SELECT * FROM books LIMIT ? OFFSET ?', (limit, skip))
@@ -20,6 +23,7 @@ def get_books(skip: int = 0, limit: int = 100):
 
 # Add new book
 def create_book(book_data: dict):
+    '''adding a new book'''
     conn = get_db_connection()
     cursor = conn.cursor()
     cursor.execute(
@@ -35,11 +39,11 @@ def create_book(book_data: dict):
 
 #update book
 def update_book(book_id: int, book_update: dict):
+    '''updating an entry'''
     conn = get_db_connection()
     cursor = conn.cursor()
     try:
         update_data = {}
-        
         if book_update.get('title'):
             update_data['title'] = book_update['title']
         
@@ -67,6 +71,7 @@ def update_book(book_id: int, book_update: dict):
 
 #delete book
 def delete_book(book_id: int):
+    '''deleting an entry'''
     conn = get_db_connection()
     cursor = conn.cursor()
     try:

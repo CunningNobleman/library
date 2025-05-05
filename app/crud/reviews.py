@@ -1,7 +1,9 @@
+'''crud operations for reviews table'''
 from ..database import get_db_connection
 
 #get review by id
 def get_review(review_id: int):
+    '''getting a reviews'''
     conn = get_db_connection()
     cursor = conn.cursor()
     cursor.execute('SELECT * FROM reviews WHERE review_id = ?', (review_id,))
@@ -11,10 +13,11 @@ def get_review(review_id: int):
 
 #get review by book_id
 def get_reviews_by_book(book_id: int):
+    '''getting reviews by book'''
     conn = get_db_connection()
     cursor = conn.cursor()
     cursor.execute('''
-        SELECT r.*, u.username 
+        SELECT r.*, u.username
         FROM reviews r
         JOIN users u ON r.user_id = u.user_id
         WHERE r.book_id = ?
@@ -26,24 +29,25 @@ def get_reviews_by_book(book_id: int):
 
 #Create review
 def create_review(review_data: dict):
+    '''creating new entries'''
     conn = get_db_connection()
     cursor = conn.cursor()
-    
-    
+
+
     cursor.execute('SELECT 1 FROM books WHERE book_id = ?', (review_data['book_id'],))
     if not cursor.fetchone():
         conn.close()
         raise ValueError("Book not found")
-    
+
     cursor.execute(
-        '''INSERT INTO reviews 
-           (book_id, user_id, rating, comment) 
+        '''INSERT INTO reviews
+           (book_id, user_id, rating, comment)
            VALUES (?, ?, ?, ?)''',
-        (review_data['book_id'], 
+        (review_data['book_id'],
          review_data['user_id'],
          review_data['rating'],
          review_data.get('comment')))
-    
+
     conn.commit()
     review_id = cursor.lastrowid
     cursor.execute('SELECT * FROM reviews WHERE review_id = ?', (review_id,))
@@ -53,6 +57,7 @@ def create_review(review_data: dict):
 
 #delete review
 def delete_review(review_id: int):
+    '''deleting review'''
     conn = get_db_connection()
     cursor = conn.cursor()
     try:
